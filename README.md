@@ -133,3 +133,52 @@ If you get access denied you can run the following command
 
 ![image](https://user-images.githubusercontent.com/110126036/189878911-f196c011-4c6c-4575-9d55-d0ad39dc24b8.png)
 
+## Creating a web server using Dockerfile
+
+### Create index.html
+
+```
+<html>
+<head>
+  <title>Welcome to Sam's Website</title>
+
+  <body>
+    <h1> Hello there, I am Sam</h1>
+    <h2> This website is hosted inside a Container using Docker!</h2>
+
+  </body>
+</head>
+</html>
+```
+
+### Create a Dockerfile
+
+```
+# Select NGINX base image
+FROM nginx
+
+# label it
+LABEL MAINTAINER=sdennis@spartaglobal.com
+
+# copy data from localhost to the container
+COPY index.html /usr/share/nginx/html/
+
+# allow required port
+EXPOSE 80
+
+# execute required command
+CMD ["nginx", "-g", "daemon off;"]
+
+```
+
+### Build the image 
+
+`docker build -t sdennis3141/eng122_nginx_tutorial_web_hosting:v1.0 .`
+
+### Run the image
+
+`docker run -d -p 80:80 sdennis3141/eng122_nginx_tutorial_web_hosting:v1.0`
+
+### And it is finished
+
+![image](https://user-images.githubusercontent.com/110126036/189878911-f196c011-4c6c-4575-9d55-d0ad39dc24b8.png)
